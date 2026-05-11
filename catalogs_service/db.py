@@ -55,8 +55,6 @@ class ProductoORM(Base):
 Base.metadata.create_all(bind=engine)
 
 
-# ── Clientes ──────────────────────────────
-
 def cliente_insert(cliente: ClienteORM) -> None:
     with SessionLocal() as s:
         s.add(cliente)
@@ -81,8 +79,6 @@ def cliente_delete(clienteID: str) -> None:
         s.commit()
 
 
-# ── Domicilios ────────────────────────────
-
 def domicilio_insert(domicilio: DomicilioORM) -> None:
     with SessionLocal() as s:
         s.add(domicilio)
@@ -105,9 +101,6 @@ def domicilio_delete(domicilioID: str) -> None:
         obj = s.get(DomicilioORM, domicilioID)
         s.delete(obj)
         s.commit()
-
-
-# ── Productos ─────────────────────────────
 
 def producto_insert(producto: ProductoORM) -> None:
     with SessionLocal() as s:

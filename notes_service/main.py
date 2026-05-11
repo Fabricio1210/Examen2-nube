@@ -15,9 +15,6 @@ from db import (
 from S3 import s3_upload_pdf, s3_get_pdf_bytes, s3_marcar_descargada
 from pdf_gen import generate_nota_pdf
 
-# ──────────────────────────────────────────
-# Variables de entorno
-# ──────────────────────────────────────────
 ENVIRONMENT          = os.environ.get("ENVIRONMENT", "local")
 CATALOGS_SERVICE_URL = os.environ.get("CATALOGS_SERVICE_URL", "http://127.0.0.1:8001")
 BASE_URL             = os.environ.get("BASE_URL", "http://localhost:8002")
@@ -47,9 +44,6 @@ def publicar_notificacion(correo: str, folio: str, enlace_descarga: str) -> None
     )
 
 
-# ──────────────────────────────────────────
-# App
-# ──────────────────────────────────────────
 app = FastAPI(title="Notas de Venta Service")
 
 
@@ -72,7 +66,7 @@ async def crear_nota(req: NotaVentaConContenido):
     nueva_nota_id   = str(uuid.uuid4())
     total_acumulado = 0.0
     items_pdf       = []
-    items_contenido = []   # acumulamos primero, insertamos después
+    items_contenido = [] 
 
     async with httpx.AsyncClient() as client:
         for item in contenido:
@@ -98,7 +92,6 @@ async def crear_nota(req: NotaVentaConContenido):
                 "importe":        importe,
             })
 
-    # Primero la nota (padre), luego el contenido (hijos)
     nota_insert(NotaVentaORM(
         notaVentaID            = nueva_nota_id,
         clienteID              = nota_p.cliente_id,

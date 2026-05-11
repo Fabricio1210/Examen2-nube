@@ -13,16 +13,10 @@ from db import (
     ClienteORM, DomicilioORM, ProductoORM,
 )
 
-# ──────────────────────────────────────────
-# Configuración
-# ──────────────────────────────────────────
 ENVIRONMENT = os.environ.get("ENVIRONMENT", "local")
 AWS_REGION  = os.environ.get("AWS_REGION", "us-east-1")
 NAMESPACE   = "Examen2/CatalogsService"   # namespace en CloudWatch
 
-# ──────────────────────────────────────────
-# Cliente CloudWatch
-# ──────────────────────────────────────────
 def get_cw():
     return boto3.client("cloudwatch", region_name=AWS_REGION)
 
@@ -74,15 +68,8 @@ def track(endpoint: str):
     return decorator
 
 
-# ──────────────────────────────────────────
-# App
-# ──────────────────────────────────────────
 app = FastAPI(title="Catalogs Service")
 
-
-# ══════════════════════════════════════════
-# CRUD Clientes
-# ══════════════════════════════════════════
 
 @app.post("/clientes", status_code=201)
 def crear_cliente(req: Cliente):
@@ -137,11 +124,6 @@ def eliminar_cliente(clienteID: str):
             raise HTTPException(status_code=404, detail="Cliente no encontrado")
         cliente_delete(clienteID)
     return track("/clientes/{clienteID}")(_)
-
-
-# ══════════════════════════════════════════
-# CRUD Domicilios
-# ══════════════════════════════════════════
 
 @app.post("/domicilios", status_code=201)
 def crear_domicilio(req: Domicilio):
@@ -200,11 +182,6 @@ def eliminar_domicilio(domicilioID: str):
             raise HTTPException(status_code=404, detail="Domicilio no encontrado")
         domicilio_delete(domicilioID)
     return track("/domicilios/{domicilioID}")(_)
-
-
-# ══════════════════════════════════════════
-# CRUD Productos
-# ══════════════════════════════════════════
 
 @app.post("/productos", status_code=201)
 def crear_producto(req: Producto):
