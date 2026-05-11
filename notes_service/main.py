@@ -117,9 +117,13 @@ async def crear_nota(req: NotaVentaConContenido):
             {"folio": nota_p.folio, "total": total_acumulado},
             items_pdf,
         )
+        print(f"PDF generado: {len(pdf_bytes)} bytes")
         s3_upload_pdf(pdf_bytes, cliente_data["rfc"], nota_p.folio)
+        print(f"PDF subido a S3 correctamente")
     except Exception as e:
+        import traceback
         print(f"Error S3: {e}")
+        traceback.print_exc()
 
     try:
         enlace_descarga = f"{BASE_URL}/notas/{nueva_nota_id}/descargar"
