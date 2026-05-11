@@ -24,9 +24,6 @@ BASE_URL             = os.environ.get("BASE_URL", "http://localhost:8002")
 SQS_QUEUE_URL        = os.environ.get("SQS_QUEUE_URL")
 AWS_REGION           = os.environ.get("AWS_REGION", "us-east-1")
 
-# ──────────────────────────────────────────
-# Cliente SQS
-# ──────────────────────────────────────────
 def get_sqs():
     return boto3.client("sqs", region_name=AWS_REGION)
 

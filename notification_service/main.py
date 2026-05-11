@@ -77,7 +77,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Microservicio de Notificaciones", lifespan=lifespan)
 
-
 @app.get("/health")
 def health_check():
     return {"status": "ok", "ambiente": ENVIRONMENT}

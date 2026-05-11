@@ -12,7 +12,6 @@ from db import (
 
 app = FastAPI(title="Catalogs Service")
 
-# --- CRUD Clientes ---
 @app.post("/clientes", status_code=201)
 def crear_cliente(req: Cliente):
     nuevo_id = str(uuid.uuid4())
